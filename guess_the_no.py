@@ -9,7 +9,7 @@ no_of_guess = 10
 def main() :
     print(f'''I am Rakesh Soni, Welcome to the game.
      This is a no guessing game, system is thinking {num_digits} digits no without repeating.
-     system will give you the clue if you guess wrong no. 
+     system will give you the hints if you guess wrong no. 
      *******see carefully you need this while playing*******
      Hint1: if one digit is correct but in wrong position
      Hint2: one digit is correct and correct position
@@ -25,8 +25,8 @@ def main() :
             while len(guess) != num_digits or not guess.isdecimal():
                 print(f"guess {numguesses}:")
                 guess = input('>')
-                clues = getclue(guess,secretnum)
-                print(clues)
+                hints = get_hint(guess,secretnum)
+                print(hints)
                 numguesses += 1
 
                 if guess == secretnum:
@@ -45,19 +45,19 @@ def getsecretnum():
     for i in range(num_digits):
         secretnum += str(numbers[i])
     return secretnum
-def getclue(guess, secretnum):
+def get_hint(guess, secretnum):
     if guess == secretnum:
         return "you got it"
-    clues = []
+    hints = []
 
     for i in range(len(guess)):
         if guess[i] == secretnum[i]:
-            clues.append("Hint1")
+            hints.append("Hint1")
         elif guess[i] in secretnum:
-            clues.append("Hint2")
-    if len(clues) == 0:
+            hints.append("Hint2")
+    if len(hints) == 0:
         return "Rethink"
     else:
-        clues.sort()
-        return ' '.join(clues)
+        hints.sort()
+        return ' '.join(hints)
 main()
