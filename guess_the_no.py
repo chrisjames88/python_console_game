@@ -10,10 +10,10 @@ def main() :
     print(f'''I am Rakesh Soni, Welcome to the game.
      This is a no guessing game, system is thinking {num_digits} digits no without repeating.
      system will give you the clue if you guess wrong no. 
-                  see carefully 
-     pico: if one digit is correct but in wrong position
-     fermi: one digit is correct and correct position
-     bagel: no digit is correct''')
+     *******see carefully you need this while playing*******
+     Hint1: if one digit is correct but in wrong position
+     Hint2: one digit is correct and correct position
+     Rethink: no digit is correct''')
     while True:
         secretnum = getsecretnum()
         print("i have a no.")
@@ -37,7 +37,7 @@ def main() :
             print("do yoi want play again?(yes/no)")
             if not input('.').lower().startswith("y"):
                 break
-        print("Thanks for play")
+        print("Well played! Thanks for play")
 def getsecretnum():
     numbers = list('0123456789')
     random.shuffle(numbers)
@@ -52,11 +52,11 @@ def getclue(guess, secretnum):
 
     for i in range(len(guess)):
         if guess[i] == secretnum[i]:
-            clues.append("fermi")
+            clues.append("Hint1")
         elif guess[i] in secretnum:
-            clues.append("pico")
+            clues.append("Hint2")
     if len(clues) == 0:
-        return "bagels"
+        return "Rethink"
     else:
         clues.sort()
         return ' '.join(clues)
