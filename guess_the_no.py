@@ -22,28 +22,22 @@ def main() :
         numguesses = 1
         while numguesses <= no_of_guess:
             guess = ''
-            while len(guess) != num_digits or not guess.isdecimal():
-                print(f"guess {numguesses}:")
-                guess = input('>')
-                hints = get_hint(guess,secretnum)
-                print(hints)
-                numguesses += 1
-
-                if guess == secretnum:
-                    break
-                if numguesses > no_of_guess:
-                    print("you run out of guesses")
-                    print(f"the ans was{secretnum}")
-            print("do yoi want play again?(yes/no)")
-            if not input('.').lower().startswith("y"):
+            print(f"guess {numguesses}:")
+            guess = input('>')
+            numguesses += 1
+            if guess == secretnum:
                 break
-        print("Well played! Thanks for play")
+            if numguesses > no_of_guess:
+                print("you run out of guesses")
+                print(f"the ans was{secretnum}")
+        print("do yoi want play again?(yes/no)")
+        if not input('.').lower().startswith("y"):
+            break
+    print("Well played! Thanks for play")
+
+# Refactoring
 def getsecretnum():
-    numbers = list('0123456789')
-    random.shuffle(numbers)
-    secretnum = ''
-    for i in range(num_digits):
-        secretnum += str(numbers[i])
+    secretnum = random.randint(1, 10000)    
     return secretnum
 def get_hint(guess, secretnum):
     if guess == secretnum:
