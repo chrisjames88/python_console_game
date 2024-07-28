@@ -1,57 +1,67 @@
-'''
-This is no guessing console game please see the code and
-give me feedback for improvement.
-I have used a random module to generating the no,I hope you will like it.
-'''
 import random
-num_digits = 3
-no_of_guess = 10
-def main() :
-    print(f'''I am Rakesh Soni, Welcome to the game.
-     This is a no guessing game, system is thinking {num_digits} digits no without repeating.
-     system will give you the hints if you guess wrong no. 
-     *******see carefully you need this while playing*******
-     Hint1: if one digit is correct but in wrong position
-     Hint2: one digit is correct and correct position
-     Rethink: no digit is correct''')
+
+NUM_DIGITS = 3
+MAX_GUESSES = 10
+
+def main():
+    print('''Welcome.
+    This is a number guessing game where the system is thinking of a {}-digit number without repeating digits.
+    The system will give you hints if you guess the wrong number. 
+    *******See carefully, you need this while playing*******
+    Hint1: one digit is correct but in the wrong position
+    Hint2: one digit is correct and in the correct position
+    Rethink: no digit is correct'''.format(NUM_DIGITS))
+
     while True:
-        secretnum = getsecretnum()
-        print("i have a no.")
-        print(f"you have {no_of_guess} guess to get it.")
+        secret_num = get_secret_num()
+        print("I have thought of a number.")
+        print("You have {} guesses to get it.".format(MAX_GUESSES))
 
-        numguesses = 1
-        while numguesses <= no_of_guess:
+        num_guesses = 1
+        while num_guesses <= MAX_GUESSES:
             guess = ''
-            print(f"guess {numguesses}:")
-            guess = input('>')
-            numguesses += 1
-            if guess == secretnum:
+            while len(guess) != NUM_DIGITS or not guess.isdigit():
+                print("Guess {}:".format(num_guesses))
+                guess = input('> ')
+            
+            hints = get_hint(guess, secret_num)
+            print(hints)
+            num_guesses += 1
+            
+            if guess == secret_num:
                 break
-            if numguesses > no_of_guess:
-                print("you run out of guesses")
-                print(f"the ans was{secretnum}")
-        print("do yoi want play again?(yes/no)")
-        if not input('.').lower().startswith("y"):
+            if num_guesses > MAX_GUESSES:
+                print("You've run out of guesses.")
+                print("The answer was {}".format(secret_num))
+
+        print("Do you want to play again? (yes/no)")
+        if not input('> ').lower().startswith("y"):
             break
-    print("Well played! Thanks for play")
 
-# Refactoring
-def getsecretnum():
-    secretnum = random.randint(1, 10000)    
-    return secretnum
-def get_hint(guess, secretnum):
-    if guess == secretnum:
-        return "you got it"
+    print("Well played! Thanks for playing.")
+
+def get_secret_num():
+    numbers = list('0123456789')
+    random.shuffle(numbers)
+    secret_num = ''.join(numbers[:NUM_DIGITS])
+    return secret_num
+
+def get_hint(guess, secret_num):
+    if guess == secret_num:
+        return "You got it!"
+
     hints = []
-
     for i in range(len(guess)):
-        if guess[i] == secretnum[i]:
-            hints.append("Hint1")
-        elif guess[i] in secretnum:
+        if guess[i] == secret_num[i]:
             hints.append("Hint2")
+        elif guess[i] in secret_num:
+            hints.append("Hint1")
+
     if len(hints) == 0:
         return "Rethink"
     else:
         hints.sort()
         return ' '.join(hints)
-main()
+
+if __name__ == "__main__":
+    main()
